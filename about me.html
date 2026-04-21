@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <title>M. Zuhad Dzulfikar — About Me</title>
+
+  <style>
+    :root {
+      --header-height: 80px;
+      --serif: 'EB Garamond', 'Calibri', serif;
+      --sans:  'DM Sans', sans-serif;
+      --ink:   #1a1a18;
+      --ink-2: #6b6b67;
+      --ink-3: #b0aea9;
+      --rule:  rgba(0,0,0,0.08);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: #ffffff;
+      color: var(--ink);
+      padding-top: var(--header-height);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .header-sub {
+      font-size: 0.72rem;
+      color: var(--ink-2);
+      margin-top: 2px;
+      font-weight: 300;
+    }
+
+    /* ─── PAGE TRANSITIONS ─── */
+    @keyframes pageEnter {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pageExit {
+      from { opacity: 1; transform: translateY(0); }
+      to   { opacity: 0; transform: translateY(-40px); }
+    }
+    body { animation: pageEnter 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; }
+    body.leaving {
+      animation: pageExit 0.35s cubic-bezier(0.55, 0, 1, 0.45) forwards;
+      pointer-events: none;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      body, body.leaving { animation: none; }
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      position: fixed;
+      top: 0; left: 0; width: 100%;
+      height: var(--header-height);
+      background: #ffffff;
+      border-bottom: 0.5px solid var(--rule);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      z-index: 999;
+    }
+
+    .header-name {
+      font-family: var(--sans);
+      font-weight: 500;
+      font-size: 0.88rem;
+      color: var(--ink);
+      letter-spacing: 0.01em;
+    }
+
+    .site-nav {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .site-nav a {
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      color: var(--ink-2);
+      text-decoration: none;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      transition: color 0.18s;
+    }
+
+    .site-nav a:hover { color: var(--ink); }
+
+    .site-nav a.active {
+      color: var(--ink);
+      font-weight: 500;
+      border-bottom: 1px solid var(--ink);
+      padding-bottom: 1px;
+    }
+
+    /* ─── PAGE WRAPPER ─── */
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 7rem 2.5rem 6rem;
+    }
+
+    /* ─── HERO HEADING ─── */
+    .hero {
+      margin-bottom: 4rem;
+    }
+
+    .eyebrow {
+      font-family: var(--sans);
+      font-size: 0.62rem;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin-bottom: 1.6rem;
+    }
+
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(3.2rem, 6.5vw, 5.6rem);
+      font-weight: 400;
+      line-height: 1.02;
+      color: var(--ink);
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--ink-2);
+    }
+
+    /* ─── SECTION ROWS ─── */
+    /* Each row: left label + right text, separated by a top rule */
+    .section-row {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 3.5rem;
+      padding: 2.8rem 0;
+      border-top: 0.5px solid var(--rule);
+      align-items: start;
+    }
+
+    .section-row:last-of-type {
+      border-bottom: 0.5px solid var(--rule);
+    }
+
+    /* ─── LEFT: SUBHEADING ─── */
+    h2 {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--ink);
+      padding-top: 0.15rem; /* optical alignment with first line of text */
+    }
+
+    h2 em { font-style: italic; }
+
+    /* ─── RIGHT: BODY TEXT ─── */
+    .section-body p {
+      font-family: var(--sans);
+      font-size: 0.875rem;
+      font-weight: 300;
+      line-height: 1.95;
+      color: var(--ink-2);
+    }
+
+    .section-body p + p {
+      margin-top: 1.2rem;
+    }
+
+    /* ─── FOOTER STRIP ─── */
+    .footer-strip {
+      margin-top: 5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .contact-eyebrow {
+      font-family: var(--sans);
+      font-size: 0.62rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin-bottom: 0.55rem;
+    }
+
+    .contact-link {
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 0.5px solid var(--rule);
+      padding-bottom: 3px;
+      transition: border-color 0.2s;
+      display: inline-block;
+    }
+
+    .contact-link:hover { border-color: var(--ink); }
+
+    .social {
+      font-family: var(--sans);
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: var(--ink-3);
+      margin-top: 0.5rem;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 680px) {
+      header { padding: 0 1.2rem; }
+      .site-nav { gap: 1.2rem; }
+      .page { padding: 5rem 1.2rem 4rem; }
+      .section-row {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+        padding: 2rem 0;
+      }
+      .footer-strip { flex-direction: column; gap: 2rem; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div>
+      <div class="header-name">M. Zuhad Dzulfikar</div>
+      <div class="header-sub">About</div>
+    </div>
+    <nav class="site-nav">
+
+            <a href="index.html">Portfolio</a>
+            <a href="about.html" class="active">About Me</a>
+    </nav>
+  </header>
+
+  <main class="page">
+
+    <!-- Hero -->
+    <div class="hero">
+      <!-- <div class="eyebrow">About</div> -->
+      <h1>About<br><em>Me.</em></h1>
+    </div>
+
+    <!-- Row 1 -->
+    <div class="section-row">
+      <h2>My Background</h2>
+      <div class="section-body">
+        <p>
+          I’m a graduate of Economics from Universitas Airlangga, building my career in the field of data analysis. 
+          I’m deeply passionate about turning data into insights—where analytical thinking meets practical problem-solving, 
+          both requiring a strong attention to detail.
+        </p>
+      </div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="section-row">
+      <h2>My Passion</h2>
+      <div class="section-body">
+        <p>
+          I’ve always been curious about what drives outcomes—<em>why</em> certain trends happen, what influences decisions, 
+          and how data can reveal patterns that aren’t immediately obvious. That curiosity led me to study economics, 
+          where I developed a strong analytical mindset and learned to approach problems through a data-driven lens.
+        </p>
+        <p>
+          Over time, I found myself drawn deeper into working with data—cleaning it, exploring it, 
+          and turning it into insights that actually matter. That’s what led me to pursue a career in data analysis. 
+          My journey wasn’t strictly linear, but each step helped shape how I think: structured, curious, 
+          and always looking for the story behind the numbers.
+        </p>
+      </div>
+    </div>
+    
+
+    <!-- Footer strip 
+    <div class="footer-strip">
+      <div>
+        <div class="contact-eyebrow">Get in touch</div>
+        <a href="mailto:dzulfikarzuhad@gmail.com" class="contact-link">
+          dzulfikarzuhad@gmail.com
+        </a>
+        <div class="social">@dzulfikarzuhad</div>
+      </div>
+    </div>
+    -->
+  </main>
+
+  <script>
+    document.querySelectorAll('.site-nav a').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        var href = this.getAttribute('href');
+        if (!href || href === '#') return;
+        e.preventDefault();
+        document.body.classList.add('leaving');
+        setTimeout(function() { window.location.href = href; }, 350);
+      });
+    });
+  </script>
+
+</body>
+</html>
