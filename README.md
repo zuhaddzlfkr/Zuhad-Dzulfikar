@@ -1,6 +1,6 @@
 My Portfolio Guideline
 
-Here is the link to my portfolio: https://zuhaddzlfkr.github.io/Zuhad-Dzulfikar/
+Here is the link to my portfolio: https://zuhaddzlfkr.github.io/
 
 It includes my:
 
