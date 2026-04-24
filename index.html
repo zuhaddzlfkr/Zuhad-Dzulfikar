@@ -14,14 +14,28 @@
       --header-height: 80px;
       --gap: 20px;
       --serif: 'EB Garamond', Georgia, serif;
-      --sans: 'DM Sans', sans-serif;
-      --ink:    #1a1a18;
-      --ink-2:  #6b6b67;
-      --ink-3:  #7e7e7e;
-      --rule:   rgba(0,0,0,0.10);
-      --bg:     #ffffff;
-      --bg-2:   #f7f6f4;
-      --accent: #2a4a3e;
+      --sans:  'DM Sans', sans-serif;
+      --ink:   #1a1a18;
+      --ink-2: #6b6b67;
+      --ink-3: #7e7e7e;
+      --rule:  rgba(0,0,0,0.10);
+      --bg:    #ffffff;
+      --bg-2:  #f7f6f4;
+      --accent:      #b94040;
+      --accent-soft: rgba(185, 64, 64, 0.07);
+      --accent-mid:  rgba(185, 64, 64, 0.15);
+    }
+
+    html[data-theme="dark"] {
+      --ink:   #e8e6e1;
+      --ink-2: #9a9892;
+      --ink-3: #6a6a66;
+      --rule:  rgba(255,255,255,0.10);
+      --bg:    #141412;
+      --bg-2:  #1e1d1b;
+      --accent:      #c95555;
+      --accent-soft: rgba(201, 85, 85, 0.10);
+      --accent-mid:  rgba(201, 85, 85, 0.20);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -33,13 +47,14 @@
       color: var(--ink);
       padding-top: var(--header-height);
       -webkit-font-smoothing: antialiased;
+      transition: background 0.35s ease, color 0.35s ease;
     }
 
     /* ─── HEADER ─── */
     header {
       position: fixed;
       top: 0; left: 0; width: 100%;
-      background: rgba(255,255,255,0.96);
+      background: rgba(255,255,255,0.92);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       border-bottom: 0.5px solid var(--rule);
@@ -49,7 +64,9 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      transition: background 0.35s ease;
     }
+    html[data-theme="dark"] header { background: rgba(20,20,18,0.92); }
 
     .header-name { font-family: var(--sans); font-weight: 500; font-size: 0.9rem; color: var(--ink); letter-spacing: 0.01em; }
     .header-sub  { font-size: 0.72rem; color: var(--ink-2); margin-top: 2px; font-weight: 300; }
@@ -57,7 +74,7 @@
     nav { display: flex; gap: 2rem; align-items: center; }
     nav a { font-size: 0.8rem; color: var(--ink-2); text-decoration: none; font-weight: 400; letter-spacing: 0.02em; transition: color 0.2s; }
     nav a:hover { color: var(--ink); }
-    nav a.active { color: var(--ink); font-weight: 500; border-bottom: 1px solid var(--ink); padding-bottom: 1px; }
+    nav a.active { color: var(--accent); font-weight: 500; border-bottom: 1px solid var(--accent); padding-bottom: 1px; }
 
     /* ─── HERO ─── */
     .hero {
@@ -66,7 +83,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 3rem;
-      align-items: end;
+      align-items: start;
       opacity: 0;
       transform: translateY(20px);
       animation: fadeUp 0.7s ease forwards 0.1s;
@@ -74,9 +91,12 @@
 
     .hero-title { font-family: var(--serif); font-size: clamp(2.8rem, 5vw, 4.2rem); font-weight: 400; line-height: 1.05; color: var(--ink); }
     .hero-title em { font-style: italic; color: var(--accent); }
+    .hero { background: linear-gradient(160deg, var(--bg) 70%, var(--accent-soft) 100%); }
     .hero-body { font-size: 0.85rem; color: var(--ink-2); line-height: 1.85; margin-top: 1.4rem; font-weight: 300; max-width: 380px; }
     .hero-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.7rem; }
+    .hero-links { display: flex; align-items: center; gap: 0.6rem; margin-top: 1.6rem; flex-wrap: wrap; }
 
+    /* ─── META PILL ─── */
     .meta-pill {
       font-size: 0.72rem; color: var(--bg); border: 0.5px solid var(--rule);
       border-radius: 40px; padding: 0.3rem 0.9rem; font-weight: 300;
@@ -84,15 +104,14 @@
       display: inline-block;
       transition: background 0.2s, color 0.2s, border-color 0.2s;
     }
-    a.meta-pill:hover { background: var(--bg); color: #000000; border-color: var(--ink); }
-    .hero-links { display: flex; align-items: center; gap: 0.6rem; margin-top: 1.6rem; flex-wrap: wrap; }
+    a.meta-pill:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
 
     /* ─── SECTION LABELS ─── */
     .section-head { display: flex; align-items: center; gap: 1rem; padding: 1.4rem 2.5rem 1.2rem; }
-    .section-head span { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); white-space: nowrap; font-weight: 400; }
+    .section-head-label { color: var(--accent); font-weight: 500; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; white-space: nowrap; }
     .section-rule { flex: 1; height: 0.5px; background: var(--rule); }
 
-    /* ─── FEATURED ─── */
+    /* ─── FEATURED / WORK SHOWCASE ─── */
     .featured {
       border-top: 0.5px solid var(--rule);
       border-bottom: 0.5px solid var(--rule);
@@ -105,30 +124,39 @@
 
     .feat-visual {
       border-right: 0.5px solid var(--rule);
-      background: var(--bg);
+      background: var(--bg-2);
       position: relative;
       overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 1.5rem;
     }
-    .feat-visual img { width: 100%; height: auto; object-fit: contain; display: block; transition: transform 0.6s ease; }
+    .feat-visual img { width: 100%; max-height: 280px; object-fit: contain; display: block; transition: transform 0.6s ease; border-radius: 2px; }
     .feat-visual:hover img { transform: scale(1.02); }
-
     .feat-badge {
       position: absolute; top: 1.2rem; left: 1.2rem;
       font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
-      background: rgba(255,255,255,0.92); border: 0.5px solid var(--rule);
+      background: var(--bg); border: 0.5px solid var(--rule);
       padding: 0.25rem 0.7rem; color: var(--ink-2);
     }
 
     .feat-content { padding: 2.8rem 2.5rem; display: flex; flex-direction: column; justify-content: space-between; }
     .feat-title { font-family: var(--serif); font-size: clamp(1.4rem, 2.2vw, 1.9rem); font-weight: 400; line-height: 1.2; margin-bottom: 1rem; }
     .feat-desc { font-size: 0.82rem; color: var(--ink-2); line-height: 1.85; font-weight: 300; flex: 1; }
-    .feat-result { margin-top: 1.8rem; padding: 1rem 1.2rem; background: var(--bg-2); border-left: 2px solid var(--accent); }
+    .feat-desc a { color: var(--accent); text-decoration: underline; font-size: 0.78rem; }
+    .feat-desc a:hover { opacity: 0.75; }
+    .feat-result { margin-top: 1.8rem; padding: 1rem 1.2rem; background: var(--accent-soft); border-left: 2px solid var(--accent); }
     .feat-result-label { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--ink-3); margin-bottom: 0.3rem; }
     .feat-result-val { font-family: var(--serif); font-size: 1.05rem; color: var(--ink); font-weight: 400; }
     .feat-tags { margin-top: 1.2rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+    /* Work Showcase — no image variant (full width) */
+    .featured.no-visual .feat-content {
+      grid-column: 1 / -1;
+      max-width: 680px;
+    }
+    .featured.no-visual { grid-template-columns: 1fr; }
 
     /* ─── PROJECT GRID ─── */
     .project-grid { display: grid; grid-template-columns: 1fr 1fr; border-top: 0.5px solid var(--rule); }
@@ -142,26 +170,17 @@
     }
     .project-card.visible { animation: fadeUp 0.5s ease forwards; }
     .project-card:nth-child(odd) { border-right: 0.5px solid var(--rule); }
-    .project-card:hover { background: var(--bg-2); }
+    .project-card:hover { background: var(--accent-soft); }
 
-    /* ─── W3SCHOOLS SLIDESHOW ─── */
-    /* Outer wrapper — sits where the image used to be */
+    /* ─── SLIDESHOW ─── */
     .slideshow-wrap {
       position: relative;
       width: 100%;
       margin-bottom: 1.2rem;
+      overflow: hidden;
     }
-
-    /* Each slide: hidden by default, shown when .active */
-    .w3-slide {
-      display: none;
-      position: relative;
-    }
-    .w3-slide.active {
-      display: block;
-    }
-
-    /* The image inside each slide */
+    .w3-slide { display: none; position: relative; }
+    .w3-slide.active { display: block; }
     .w3-slide img {
       width: 100%;
       aspect-ratio: 16 / 9.5;
@@ -170,37 +189,31 @@
       border: 0.5px solid var(--rule);
       transition: transform 0.5s ease;
     }
-    .project-card:hover .w3-slide.active img {
-      transform: scale(1.03);
-    }
+    .project-card:hover .w3-slide.active img { transform: scale(1.03); }
 
-    /* Prev / Next buttons — appear on hover over the wrap */
     .w3-prev, .w3-next {
       position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
+      top: 50%; transform: translateY(-50%);
       background: rgba(255,255,255,0.88);
-      border: none;
-      color: var(--ink);
+      border: none; color: var(--ink);
       font-size: 1rem;
       width: 30px; height: 30px;
       display: flex; align-items: center; justify-content: center;
       cursor: pointer;
-      opacity: 0;
-      transition: opacity 0.2s;
+      opacity: 0; transition: opacity 0.2s;
       z-index: 2;
     }
+    html[data-theme="dark"] .w3-prev,
+    html[data-theme="dark"] .w3-next { background: rgba(30,29,27,0.88); }
     .slideshow-wrap:hover .w3-prev,
     .slideshow-wrap:hover .w3-next { opacity: 1; }
     .w3-prev { left: 0; }
     .w3-next { right: 0; }
     .w3-prev:hover, .w3-next:hover { background: rgba(255,255,255,1); }
+    html[data-theme="dark"] .w3-prev:hover,
+    html[data-theme="dark"] .w3-next:hover { background: rgba(30,29,27,1); }
 
-    /* Dot indicators — W3Schools style */
-    .w3-dots {
-      text-align: center;
-      padding: 6px 0 0;
-    }
+    .w3-dots { text-align: center; padding: 6px 0 0; }
     .w3-dot {
       display: inline-block;
       width: 6px; height: 6px;
@@ -210,31 +223,20 @@
       cursor: pointer;
       opacity: 0.4;
       transition: opacity 0.2s, background 0.2s;
-      border: none;
-      padding: 0;
+      border: none; padding: 0;
     }
-    .w3-dot.active {
-      background: var(--ink);
-      opacity: 1;
-    }
-    /* Hide dots when only 1 image */
-    .w3-dots:empty { display: none; }
+    .w3-dot.active { background: var(--accent); opacity: 1; }
 
+    /* ─── CARD TYPOGRAPHY ─── */
     .card-num   { font-family: var(--serif); font-style: italic; font-size: 0.8rem; color: var(--ink-3); margin-bottom: 0.4rem; }
     .card-title { font-family: var(--serif); font-size: 1.2rem; font-weight: 400; line-height: 1.25; margin-bottom: 0.6rem; }
-    .card-desc  { font-size: 0.78rem; color: var(--ink-2); line-height: 1.8; font-weight: 300; margin-bottom: 1rem; }
+    .card-desc  { font-size: 0.78rem; color: var(--ink-2); line-height: 1.8; font-weight: 300; margin-bottom: 0.8rem; }
+    .card-desc ul { padding-left: 1.2rem; margin-top: 0.4rem; }
+    .card-desc li { margin-bottom: 0.2rem; }
 
     /* ─── TAGS ─── */
     .tag  { font-size: 0.65rem; letter-spacing: 0.06em; color: var(--ink-3); border: 0.5px solid var(--rule); padding: 0.2rem 0.55rem; font-weight: 400; }
     .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-
-    /* ─── PROCESS STRIP ─── */
-    .process-strip { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 0.5px solid var(--rule); border-bottom: 0.5px solid var(--rule); background: var(--bg-2); }
-    .process-step { padding: 2rem 2rem 2rem 2.5rem; border-right: 0.5px solid var(--rule); }
-    .process-step:last-child { border-right: none; }
-    .process-n     { font-family: var(--serif); font-style: italic; font-size: 2.2rem; color: var(--rule); line-height: 1; margin-bottom: 0.5rem; }
-    .process-label { font-size: 0.78rem; font-weight: 500; color: var(--ink); margin-bottom: 0.4rem; }
-    .process-desc  { font-size: 0.75rem; color: var(--ink-2); line-height: 1.7; font-weight: 300; }
 
     /* ─── SKILLS STRIP ─── */
     .skills-strip { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 0.5px solid var(--rule); border-bottom: 0.5px solid var(--rule); }
@@ -242,10 +244,137 @@
     .skill-col:last-child { border-right: none; }
     .skill-col-label { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--ink-3); margin-bottom: 0.8rem; }
 
+    /* ─── EDUCATION ─── */
+    .education-strip {
+      border-top: 0.5px solid var(--rule);
+      border-bottom: 0.5px solid var(--rule);
+    }
+    .edu-item {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 2.5rem;
+      padding: 2rem 2.5rem;
+      border-bottom: 0.5px solid var(--rule);
+      align-items: start;
+    }
+    .edu-item:last-child { border-bottom: none; }
+    .edu-year { font-family: var(--serif); font-style: italic; font-size: 0.82rem; color: var(--ink-3); padding-top: 0.1rem; white-space: nowrap; }
+    .edu-degree { font-family: var(--serif); font-size: 1.1rem; font-weight: 400; color: var(--ink); margin-bottom: 0.25rem; }
+    .edu-school { font-size: 0.75rem; font-weight: 400; color: var(--ink-2); letter-spacing: 0.02em; margin-bottom: 0.3rem; }
+    .edu-grade  { font-size: 0.75rem; color: var(--ink-3); font-weight: 300; margin-bottom: 0.7rem; }
+    .edu-list {
+      list-style: none; padding: 0;
+      display: flex; flex-wrap: wrap; gap: 0.4rem;
+      margin-top: 0.5rem;
+    }
+    .edu-list li {
+      font-size: 0.72rem; color: var(--ink-3);
+      border: 0.5px solid var(--rule);
+      padding: 0.2rem 0.55rem;
+      font-weight: 400; letter-spacing: 0.04em;
+    }
+
+    /* ─── MINI TIMELINE ─── */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+      padding-left: 1.2rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 6px; bottom: 6px;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--accent) 0%, rgba(185,64,64,0.15) 100%);
+    }
+    .tl-item {
+      position: relative;
+      padding: 0 0 1.4rem 1.2rem;
+      opacity: 0;
+      transform: translateX(10px);
+    }
+    .tl-item.visible {
+      animation: tlIn 0.45s ease forwards;
+    }
+    @keyframes tlIn { to { opacity: 1; transform: translateX(0); } }
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: -1.56rem; top: 5px;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 1.5px solid var(--accent);
+      transition: background 0.2s;
+    }
+    .tl-item:first-child::before { background: var(--accent); }
+    .tl-item:last-child { padding-bottom: 0; }
+    .tl-year {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 0.72rem;
+      color: var(--accent);
+      margin-bottom: 0.15rem;
+      letter-spacing: 0.02em;
+    }
+    .tl-text {
+      font-size: 0.75rem;
+      color: var(--ink-2);
+      line-height: 1.65;
+      font-weight: 300;
+    }
+    .tl-item:last-child .tl-year { color: var(--ink); font-style: normal; font-weight: 500; }
+    .tl-item:last-child .tl-text { color: var(--ink-2); }
+    .tl-item:last-child::before { background: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+
+    /* Slideshow inside feat-visual */
+    .feat-visual .slideshow-wrap { margin-bottom: 0; }
+    .feat-visual .w3-slide img { aspect-ratio: 16/9.5; object-fit: cover; max-height: none; border-radius: 0; border: none; }
+    .feat-visual .w3-dots { padding: 8px 0 0; }
+
     /* ─── FOOTER ─── */
-    footer { padding: 2rem 2.5rem; display: flex; justify-content: space-between; align-items: center; border-top: 0.5px solid var(--rule); }
-    .footer-contact { font-size: 0.72rem; color: var(--ink-3); margin-top: 2px; font-weight: 300; }
-    .footer-links   { display: flex; gap: 1.5rem; }
+    footer {
+      padding: 2rem 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      align-items: center;
+      border-top: 0.5px solid var(--rule);
+    }
+    .footer-contact { font-size: 0.72rem; color: var(--ink-3); font-weight: 300; }
+    .footer-fun     { font-size: 0.72rem; color: var(--ink-3); font-weight: 300; text-align: center; font-style: italic; }
+    .footer-copy    { font-size: 0.72rem; color: var(--ink-3); font-weight: 300; text-align: right; }
+
+    /* ─── DARK MODE TOGGLE ─── */
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      background: none;
+      border: 0.5px solid var(--rule);
+      border-radius: 40px;
+      padding: 0.3rem 0.75rem 0.3rem 0.55rem;
+      color: var(--ink-2);
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      font-weight: 300;
+      letter-spacing: 0.02em;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+    .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+    .theme-toggle .toggle-icon {
+      font-size: 0.85rem;
+      transition: transform 0.4s ease;
+      display: inline-block;
+    }
+    html[data-theme="dark"] .theme-toggle .toggle-icon { transform: rotate(180deg); }
+    .toggle-label-light { display: inline; }
+    .toggle-label-dark  { display: none; }
+    html[data-theme="dark"] .toggle-label-light { display: none; }
+    html[data-theme="dark"] .toggle-label-dark  { display: inline; }
 
     /* ─── ANIMATIONS ─── */
     @keyframes fadeUp    { to { opacity: 1; transform: translateY(0); } }
@@ -261,7 +390,7 @@
       header { padding: 0 1.2rem; }
       nav { gap: 1rem; }
       .hero { grid-template-columns: 1fr; padding: 3rem 1.2rem 2.5rem; }
-      .hero-right { align-items: flex-start; }
+      .hero-right { align-items: flex-start; margin-top: 2rem; }
       .featured { grid-template-columns: 1fr; }
       .feat-visual { border-right: none; border-bottom: 0.5px solid var(--rule); }
       .feat-content { padding: 1.8rem 1.2rem; }
@@ -271,79 +400,10 @@
       .skills-strip { grid-template-columns: 1fr; }
       .skill-col { border-right: none; border-bottom: 0.5px solid var(--rule); }
       .skill-col:last-child { border-bottom: none; }
-      .process-strip { grid-template-columns: 1fr 1fr; }
-      .process-step:nth-child(2) { border-right: none; }
-      .process-step:nth-child(3) { border-top: 0.5px solid var(--rule); }
-      .process-step:nth-child(4) { border-top: 0.5px solid var(--rule); border-right: none; }
       .section-head { padding: 1.2rem 1.2rem 1rem; }
-      footer { flex-direction: column; gap: 1rem; align-items: flex-start; padding: 1.5rem 1.2rem; }
-    }
-
-    /* ─── EDUCATION STRIP ─── */
-    .education-strip {
-      border-top: 0.5px solid var(--rule);
-      border-bottom: 0.5px solid var(--rule);
-    }
- 
-    .edu-item {
-      display: grid;
-      grid-template-columns: 160px 1fr;
-      gap: 2.5rem;
-      padding: 2rem 2.5rem;
-      border-bottom: 0.5px solid var(--rule);
-      align-items: start;
-    }
- 
-    .edu-item:last-child { border-bottom: none; }
- 
-    .edu-year {
-      font-family: var(--serif);
-      font-style: italic;
-      font-size: 0.82rem;
-      color: var(--ink-3);
-      padding-top: 0.1rem;
-      white-space: nowrap;
-    }
- 
-    .edu-degree {
-      font-family: var(--serif);
-      font-size: 1.1rem;
-      font-weight: 400;
-      color: var(--ink);
-      margin-bottom: 0.25rem;
-    }
- 
-    .edu-school {
-      font-size: 0.75rem;
-      font-weight: 400;
-      color: var(--ink-2);
-      letter-spacing: 0.02em;
-      margin-bottom: 0.7rem;
-    }
- 
-    .edu-desc {
-      font-size: 0.78rem;
-      color: var(--ink-2);
-      line-height: 1.8;
-      font-weight: 300;
-    }
-
-    .edu-list {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-top: 0.5rem;
-    }
-
-    .edu-list li {
-    font-size: 0.72rem;
-    color: var(--ink-3);
-    border: 0.5px solid var(--rule);
-    padding: 0.2rem 0.55rem;
-    font-weight: 400;
-    letter-spacing: 0.04em;
+      .edu-item { grid-template-columns: 1fr; gap: 0.5rem; padding: 1.5rem 1.2rem; }
+      footer { grid-template-columns: 1fr; gap: 0.4rem; padding: 1.5rem 1.2rem; }
+      .footer-fun, .footer-copy { text-align: left; }
     }
   </style>
 </head>
@@ -358,6 +418,11 @@
     <nav>
       <a href="portfolio.html" class="active">My Portfolio</a>
       <a href="about me.html">About Me</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <span class="toggle-icon">☀︎</span>
+        <span class="toggle-label-light">Light</span>
+        <span class="toggle-label-dark">Dark</span>
+      </button>
     </nav>
   </header>
 
@@ -366,171 +431,309 @@
     <div>
       <h1 class="hero-title">Hello everyone,<br><em>Zuhad here!</em></h1>
       <p class="hero-body">
-      An economics graduate turned Data Analyst, 
-      uncovering insights and enabling data-driven decisions 
-      by understanding the “why” behind the numbers.
+        An economics graduate turned Data Analyst,
+        uncovering insights and enabling data-driven decisions
+        by understanding the "why" behind the numbers.
       </p>
       <div class="hero-links">
-        <span style="font-size:0.75rem; color:var(--red-2); font-weight:300; letter-spacing:0.06em;">Connect with me by —</span>
+        <span style="font-size:0.75rem; color:var(--ink-2); font-weight:300; letter-spacing:0.06em;">Connect with me by —</span>
         <a href="https://linkedin.com/in/mzuhaddzulfikar/" target="_blank" class="meta-pill">LinkedIn ↗</a>
-        <a href="https://medium.com/@dzulfikarzuhad" class="meta-pill">Medium ↗</a>
+        <a href="https://medium.com/@dzulfikarzuhad" target="_blank" class="meta-pill">Medium ↗</a>
       </div>
     </div>
-    <div class="hero-right"></div>
+    <div class="hero-right">
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-year">2020</div>
+          <div class="tl-text">Began undergraduate studies in Economics — built a strong foundation in statistics &amp; econometrics.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-year">2022</div>
+          <div class="tl-text">Started self-learning Data Analytics: Excel, SQL, and data visualization through online courses.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-year">2023</div>
+          <div class="tl-text">Awarded a Data Analyst bootcamp scholarship by Vokata (formerly WeShare Academy) — finished with the highest score in the class.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-year">Early 2024</div>
+          <div class="tl-text">Graduated with a Bachelor's degree in Economics.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-year">2024 – Present</div>
+          <div class="tl-text">Data Analyst at Social Investment Dept., PT. Japfa Comfeed Indonesia — data processing &amp; dashboard development for CSR programs.</div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- ─── WORK SHOWCASE ─── -->
   <div class="section-head">
-    <span style="color: var(--ink); font-weight: 500;">Work Showcase</span>
+    <span class="section-head-label">Work Showcase</span>
     <div class="section-rule"></div>
   </div>
 
-  <article class="Work Showcase">
+  <article class="featured">
+    <div class="feat-visual">
+      <span class="feat-badge">Work Showcase</span>
+      <img src="Perempuan_Nusantara.jpg" alt="Perempuan Nusantara Monitoring Dashboard" />
+    </div>
     <div class="feat-content">
       <div>
         <h2 class="feat-title">Perempuan Nusantara Monitoring Dashboard</h2>
         <p class="feat-desc">
-            Perempuan Nusantara is a women’s community located around the Japfa business units, empowered by the Social Investment Department Japfa. 
-            Currently, five Japfa business unit regions have active women’s communities that transform waste into soap and eco-enzyme. 
-            with a particular focus on producing eco-enzymes every month.
+          Perempuan Nusantara is a women's community located around the PT. Japfa Comfeed Indonesia business units, empowered by the
+          Social Investment Department PT. Japfa Comfeed Indonesia. Currently, five business unit regions have active women's
+          communities that transform waste into soap and eco-enzyme, with a particular focus on producing
+          eco-enzymes every month.
         </p>
-        <a href="https://datastudio.google.com/embed/u/0/reporting/287946ba-01d9-439a-a1a8-a55e14c98899/page/BvbgF">View Detail</a>
-        <br>
-        <p class="feat-desc">
-            Therefore, this dashboard is used to monitor the weight of organic waste processed each month 
-            by each region and by individual members or groups within the Perempuan Nusantara community.
+        <p class="feat-desc" style="margin-top: 0.8rem;">
+          This dashboard monitors the weight of organic waste processed each month by each region and by
+          individual members or groups within the Perempuan Nusantara community.
+          <br><br>
+          <a href="https://datastudio.google.com/embed/u/0/reporting/287946ba-01d9-439a-a1a8-a55e14c98899/page/BvbgF"
+             target="_blank">View Dashboard ↗</a>
         </p>
         <div class="feat-result">
-          <div class="feat-result-label">Key result</div>
-          <div class="feat-result-val">Real-time the weight of processed organic waste monitoring</div>
+          <div class="feat-result-label">Key Result</div>
+          <div class="feat-result-val">Real-time monitoring of processed organic waste weight</div>
         </div>
       </div>
       <div class="feat-tags tags" style="margin-top: 1.5rem;">
         <span class="tag">Google Form</span>
-        <span class="tag">Spreadsheet (Google Sheet)</span>
-        <span class="tag">Data Studio</span>
+        <span class="tag">Google Sheets</span>
+        <span class="tag">Looker Studio</span>
       </div>
     </div>
   </article>
 
+  <!--
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║  WORK SHOWCASE TEMPLATE — Duplikat blok ini untuk setiap proyek  ║
+  ║  Ada 2 varian:                                                    ║
+  ║  • Dengan foto  → pakai blok "DENGAN FOTO" di bawah              ║
+  ║  • Tanpa foto   → pakai blok "TANPA FOTO" di bawah               ║
+  ╚══════════════════════════════════════════════════════════════════╝
+
+  ─────────────────────────────────────────────────────────────────
+  WORK SHOWCASE 2 — DENGAN FOTO
+  ─────────────────────────────────────────────────────────────────
+  Cara pakai:
+  1. Hapus tag komentar  (baris "< !--" dan "-->" di sekitar blok ini)
+  2. Ganti semua teks [DALAM KURUNG] sesuai proyekmu
+  3. Taruh file foto di folder yang sama dengan portfolio.html
+  ─────────────────────────────────────────────────────────────────
+
+  <article class="featured">
+    <div class="feat-visual">
+      <span class="feat-badge">Work Showcase</span>
+      <!– Ganti nama file foto di bawah –>
+      <img src="[NAMA_FILE_FOTO.jpg]" alt="[Deskripsi singkat foto]" />
+    </div>
+    <div class="feat-content">
+      <div>
+        <h2 class="feat-title">[Judul Proyek]</h2>
+        <p class="feat-desc">
+          [Paragraf pertama: konteks & latar belakang proyek.
+          Jelaskan siapa yang terlibat, masalah apa yang diselesaikan.]
+        </p>
+        <p class="feat-desc" style="margin-top: 0.8rem;">
+          [Paragraf kedua: solusi & pendekatan yang kamu gunakan.
+          Opsional: tambahkan link ke dashboard/laporan.]
+          <br><br>
+          <a href="[URL_PROYEK]" target="_blank">View Project ↗</a>
+        </p>
+        <div class="feat-result">
+          <div class="feat-result-label">Key Result</div>
+          <div class="feat-result-val">[Hasil utama yang dicapai — singkat & impactful]</div>
+        </div>
+      </div>
+      <div class="feat-tags tags" style="margin-top: 1.5rem;">
+        <span class="tag">[Tool 1]</span>
+        <span class="tag">[Tool 2]</span>
+        <span class="tag">[Tool 3]</span>
+        <!– Tambah atau kurangi tag sesuai kebutuhan –>
+      </div>
+    </div>
+  </article>
+
+  ─────────────────────────────────────────────────────────────────
+  WORK SHOWCASE 3 — DENGAN FOTO
+  ─────────────────────────────────────────────────────────────────
+
+  <article class="featured">
+    <div class="feat-visual">
+      <span class="feat-badge">Work Showcase</span>
+      <img src="[NAMA_FILE_FOTO.jpg]" alt="[Deskripsi singkat foto]" />
+    </div>
+    <div class="feat-content">
+      <div>
+        <h2 class="feat-title">[Judul Proyek]</h2>
+        <p class="feat-desc">
+          [Paragraf pertama: konteks & latar belakang proyek.]
+        </p>
+        <p class="feat-desc" style="margin-top: 0.8rem;">
+          [Paragraf kedua: solusi & pendekatan.]
+          <br><br>
+          <a href="[URL_PROYEK]" target="_blank">View Project ↗</a>
+        </p>
+        <div class="feat-result">
+          <div class="feat-result-label">Key Result</div>
+          <div class="feat-result-val">[Hasil utama yang dicapai]</div>
+        </div>
+      </div>
+      <div class="feat-tags tags" style="margin-top: 1.5rem;">
+        <span class="tag">[Tool 1]</span>
+        <span class="tag">[Tool 2]</span>
+        <span class="tag">[Tool 3]</span>
+      </div>
+    </div>
+  </article>
+
+  ─────────────────────────────────────────────────────────────────
+  WORK SHOWCASE 4 — TANPA FOTO (gunakan ini jika tidak ada foto)
+  ─────────────────────────────────────────────────────────────────
+
+  <article class="featured no-visual">
+    <div class="feat-content">
+      <div>
+        <h2 class="feat-title">[Judul Proyek]</h2>
+        <p class="feat-desc">
+          [Paragraf pertama: konteks & latar belakang proyek.]
+        </p>
+        <p class="feat-desc" style="margin-top: 0.8rem;">
+          [Paragraf kedua: solusi & pendekatan.]
+          <br><br>
+          <a href="[URL_PROYEK]" target="_blank">View Project ↗</a>
+        </p>
+        <div class="feat-result">
+          <div class="feat-result-label">Key Result</div>
+          <div class="feat-result-val">[Hasil utama yang dicapai]</div>
+        </div>
+      </div>
+      <div class="feat-tags tags" style="margin-top: 1.5rem;">
+        <span class="tag">[Tool 1]</span>
+        <span class="tag">[Tool 2]</span>
+        <span class="tag">[Tool 3]</span>
+      </div>
+    </div>
+  </article>
+
+  -->
+
   <!-- ─── PERSONAL PROJECT ─── -->
   <div class="section-head">
-    <span style="color: var(--ink); font-weight: 500;">Personal Project</span>
+    <span class="section-head-label">Personal Project</span>
     <div class="section-rule"></div>
   </div>
 
-  <div class="project-grid">
-
-    <!--
-      HOW TO ADD MULTIPLE IMAGES:
-      Each .w3-slide is one image. Add as many as you like.
-      The JS handles showing/hiding and the dots automatically.
-    -->
-
-    <!-- Card 1 -->
-    <article class="The Leuser Lens Dashboard">
-      <div class="slideshow-wrap">
+  <article class="featured">
+    <div class="feat-visual">
+      <span class="feat-badge">Personal Project</span>
+      <div class="slideshow-wrap" style="width:100%; margin-bottom:0;">
         <div class="w3-slide active">
-          <img src="images/DSP5.png" alt="Towers of Hanoi enclosure" />
+          <img src="images/DSP5.png" alt="Filter performance overview" style="aspect-ratio:16/9.5; object-fit:cover;" />
         </div>
         <div class="w3-slide">
-            <img src="images/DSP1.png" alt="Second view" />
-          </div>
-        <div class="w3-slide">
-            <img src="images/DSP2.png" alt="Third view" />
-          </div>
-        <div class="w3-slide">
-            <img src="images/DSP3.png" alt="Third view" />
+          <img src="images/DSP1.png" alt="Signal waveform — before filtering" style="aspect-ratio:16/9.5; object-fit:cover;" />
         </div>
         <div class="w3-slide">
-          <img src="images/DSP4.png" alt="Towers of Hanoi enclosure" />
+          <img src="images/DSP2.png" alt="Signal waveform — after filtering" style="aspect-ratio:16/9.5; object-fit:cover;" />
         </div>
-        <button class="w3-prev" onclick="plusSlides(this, -1)">&#10094;</button>
-        <button class="w3-next" onclick="plusSlides(this,  1)">&#10095;</button>
+        <div class="w3-slide">
+          <img src="images/DSP3.png" alt="Frequency spectrum analysis" style="aspect-ratio:16/9.5; object-fit:cover;" />
+        </div>
+        <div class="w3-slide">
+          <img src="images/DSP4.png" alt="Butterworth filter response" style="aspect-ratio:16/9.5; object-fit:cover;" />
+        </div>
+        <button class="w3-prev" onclick="plusSlides(this, -1)" aria-label="Previous slide">&#10094;</button>
+        <button class="w3-next" onclick="plusSlides(this,  1)" aria-label="Next slide">&#10095;</button>
       </div>
-      <div class="w3-dots"></div>
-      <h3 class="card-title">Digital Signal Conditioning: 2nd-Order Butterworth Filter Design and Performance Analysis</h3>
-      <p class="card-desc">
-        Implemented a digital LPF using a 2nd-Order IIR Butterworth. To validate the filter's performance,a 
-        sample ambient audio with chirp signal of (10 kHz - 24 kHz) was adopted to simulate wideband noise 
-        interference.
-      </p>
-      <p class="card-desc">
-       Butterworth architecture was selected to maximise the natural characteristic of flat passband which 
-       ensures signal of interest reimains undistorted. Opting for a digital implementation was driven by 
-       design flexibility and scalability, through rigorous parameter tuning and iteration.
-      </p>
-      <p class="card-desc">
-        To validate the filter's performance, Signal-to-Noise Ratio (SNR) analysis was opted. It achieved 
-        a 13.35 dB improvement, transitioning from -7.976 dB to a clear +5.372 dB, demonstrating the filter's 
-        ability in suppressing noisy band interference. 
-       </p>
-       <div class="card-desc">
-        Architecture:
-        <ul>
-            <li>fc: 5000 Hz</li>
-            <li>fs: 48000 Hz</li>
-        </ul>
+      <div class="w3-dots" style="padding: 8px 0 0;"></div>
     </div>
-      <div class="tags">
-        <span class="tag">Python</span>
-        <span class="tag">Signal filtering</span>
+    <div class="feat-content">
+      <div>
+        <h2 class="feat-title">Digital Signal Conditioning: 2nd-Order Butterworth Filter Design and Performance Analysis</h2>
+        <p class="feat-desc">
+          Implemented a digital low-pass filter using a 2nd-order IIR Butterworth architecture. A sample ambient
+          audio with a chirp signal (10 kHz – 24 kHz) was used to simulate wideband noise interference.
+        </p>
+        <p class="feat-desc" style="margin-top: 0.8rem;">
+          Butterworth architecture was selected to maximise its naturally flat passband, ensuring the signal of
+          interest remains undistorted. A digital implementation was chosen for design flexibility and scalability
+          through rigorous parameter tuning and iteration.
+        </p>
+        <p class="feat-desc" style="margin-top: 0.8rem;">
+          Validated via Signal-to-Noise Ratio (SNR) analysis: achieved a <strong>13.35 dB improvement</strong>,
+          transitioning from −7.976 dB to +5.372 dB.
+        </p>
+        <p class="feat-desc" style="margin-top: 0.8rem;">
+          Architecture parameters: f<sub>c</sub> 5,000 Hz · f<sub>s</sub> 48,000 Hz
+        </p>
+        <div class="feat-result">
+          <div class="feat-result-label">Key Result</div>
+          <div class="feat-result-val">13.35 dB SNR improvement — from −7.976 dB to +5.372 dB</div>
+        </div>
       </div>
-    </article>
+      <div class="feat-tags tags" style="margin-top: 1.5rem;">
+        <span class="tag">Python</span>
+        <span class="tag">Signal Processing</span>
+        <span class="tag">IIR Filter</span>
+      </div>
+    </div>
+  </article>
 
-  </div>
-
- <!-- ─── EDUCATION ─── -->
+  <!-- ─── EDUCATION ─── -->
   <div class="section-head">
-    <span style="color: var(--ink); font-weight: 500;">Education</span>
+    <span class="section-head-label">Education</span>
     <div class="section-rule"></div>
   </div>
- 
-  <div class="education">
- 
+
+  <div class="education-strip">
     <div class="edu-item">
       <div class="edu-year">2020 — 2024</div>
-      <div class="edu-body">
+      <div>
         <div class="edu-degree">Bachelor of Economics</div>
-        <div class="edu-school">Universitas Airlangga - Surabaya, Indonesia</div>
-        <div class="Grade">3.81 / 4.00</div>
+        <div class="edu-school">Universitas Airlangga · Surabaya, Indonesia</div>
+        <div class="edu-grade">GPA 3.81 / 4.00</div>
         <ul class="edu-list">
-            <li>Statistics</li>
-            <li>Mathematical Economics</li>
-            <li>Applied Econometrics</li>
-            <li>Microeconomics & Macroeconomics</li>
-            <li>Planning & Development Economics</li>
-          </ul>
+          <li>Statistics</li>
+          <li>Mathematical Economics</li>
+          <li>Applied Econometrics</li>
+          <li>Microeconomics &amp; Macroeconomics</li>
+          <li>Planning &amp; Development Economics</li>
+        </ul>
       </div>
     </div>
- 
   </div>
 
   <!-- ─── SKILLS ─── -->
   <div class="section-head">
-    <span style="color: var(--ink); font-weight: 500;">Skills</span>
+    <span class="section-head-label">Skills</span>
     <div class="section-rule"></div>
   </div>
 
   <div class="skills-strip">
     <div class="skill-col">
-      <div class="skill-col-label" style="color: var(--ink); font-weight: 500;">Hard Skill</div>
+      <div class="skill-col-label" style="color: var(--accent); font-weight: 500;">Hard Skills</div>
       <div class="tags">
-        <span class="tag">Data cleaning & wrangling</span>
-        <span class="tag"> Exploratory Data Analysis(EDA)</span>
-        <span class="tag">Data visualization & dashboard development</span>
+        <span class="tag">Data Cleaning &amp; Wrangling</span>
+        <span class="tag">Exploratory Data Analysis (EDA)</span>
+        <span class="tag">Data Visualization &amp; Dashboard Development</span>
       </div>
     </div>
     <div class="skill-col">
-      <div class="skill-col-label" style="color: var(--ink); font-weight: 500;">Software</div>
+      <div class="skill-col-label" style="color: var(--accent); font-weight: 500;">Software</div>
       <div class="tags">
         <span class="tag">Microsoft Excel</span>
-        <span class="tag">Python & SQL</span>
-        <span class="tag">Data Studio & Microsoft Power BI</span>
+        <span class="tag">Python</span>
+        <span class="tag">SQL</span>
+        <span class="tag">Looker Studio</span>
+        <span class="tag">Microsoft Power BI</span>
       </div>
     </div>
     <div class="skill-col">
-      <div class="skill-col-label" style="color: var(--ink); font-weight: 500;">Soft Skill</div>
+      <div class="skill-col-label" style="color: var(--accent); font-weight: 500;">Soft Skills</div>
       <div class="tags">
         <span class="tag">Attention to Detail</span>
         <span class="tag">Analytical Thinking</span>
@@ -542,55 +745,49 @@
 
   <!-- ─── FOOTER ─── -->
   <footer>
-    <div>
-      <div class="footer-contact">dzulfikarzuhad@gmail.com</div>
-    </div>
-    <div class="footer-links">
-      <div class="footer-contact" style="color: var(--ink-2); font-weight: 400;">*Fun fact, this site was vibe-coded :D</div>
-    </div>
-     <div font-weight: 400>© 2026 Dzulfikar, M. Zuhad</div> 
+    <div class="footer-contact">dzulfikarzuhad@gmail.com</div>
+    <div class="footer-fun">Vibe-coded by Zuhad with Vanilla CSS</div>
+    <div class="footer-copy">© 2026 M. Zuhad Dzulfikar</div>
   </footer>
 
   <script>
-    /* ══════════════════════════════════════════════════
-       W3SCHOOLS SLIDESHOW — adapted per card
-       ══════════════════════════════════════════════════
+    /* ── Dark mode toggle ── */
+    (function() {
+      var saved = localStorage.getItem('theme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
 
-       To add more images to a card, just add another
-       <div class="w3-slide"> inside .slideshow-wrap:
+    document.getElementById('themeToggle').addEventListener('click', function() {
+      var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+    });
 
-         <div class="w3-slide">
-           <img src="images/photo2.jpg" alt="..." />
-         </div>
-
-       Dots and arrows update automatically.
-    */
-
-    /* Initialise each slideshow: build dots, hide arrows if only 1 slide */
+    /* ── SLIDESHOW ── */
     document.querySelectorAll('.slideshow-wrap').forEach(function(wrap) {
       var slides = wrap.querySelectorAll('.w3-slide');
-      var dotsEl = wrap.nextElementSibling; // .w3-dots div
+      var dotsEl = wrap.nextElementSibling; // .w3-dots
 
       if (slides.length <= 1) {
-        // Single image — hide controls
-        wrap.querySelector('.w3-prev').style.display = 'none';
-        wrap.querySelector('.w3-next').style.display = 'none';
+        var prev = wrap.querySelector('.w3-prev');
+        var next = wrap.querySelector('.w3-next');
+        if (prev) prev.style.display = 'none';
+        if (next) next.style.display = 'none';
         return;
       }
 
-      // Build one dot per slide
       slides.forEach(function(_, i) {
         var dot = document.createElement('button');
         dot.className = 'w3-dot' + (i === 0 ? ' active' : '');
         dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
-        dot.addEventListener('click', function() {
-          goToSlide(wrap, i);
-        });
+        dot.addEventListener('click', function() { goToSlide(wrap, i); });
         dotsEl.appendChild(dot);
       });
     });
 
-    /* Move by n steps (+1 next, -1 prev) */
     function plusSlides(btn, n) {
       var wrap   = btn.closest('.slideshow-wrap');
       var slides = wrap.querySelectorAll('.w3-slide');
@@ -598,20 +795,35 @@
       goToSlide(wrap, (cur + n + slides.length) % slides.length);
     }
 
-    /* Jump directly to slide index i */
     function goToSlide(wrap, i) {
       var slides = wrap.querySelectorAll('.w3-slide');
       var dotsEl = wrap.nextElementSibling;
       var dots   = dotsEl ? dotsEl.querySelectorAll('.w3-dot') : [];
-
       slides.forEach(function(s) { s.classList.remove('active'); });
       dots.forEach(function(d)   { d.classList.remove('active'); });
-
       slides[i].classList.add('active');
       if (dots[i]) dots[i].classList.add('active');
     }
 
-    /* ─── Page transition ─── */
+    /* ── Timeline fade-in ── */
+    var tlItems = document.querySelectorAll('.tl-item');
+    if ('IntersectionObserver' in window) {
+      var tlObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            var idx = Array.from(tlItems).indexOf(entry.target);
+            entry.target.style.animationDelay = (idx * 80) + 'ms';
+            entry.target.classList.add('visible');
+            tlObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      tlItems.forEach(function(el) { tlObserver.observe(el); });
+    } else {
+      tlItems.forEach(function(el) { el.style.opacity = 1; el.style.transform = 'none'; });
+    }
+
+    /* ── Page transition ── */
     document.querySelectorAll('nav a:not([target="_blank"])').forEach(function(link) {
       link.addEventListener('click', function(e) {
         var href = this.getAttribute('href');
@@ -622,7 +834,7 @@
       });
     });
 
-    /* ─── Scroll fade-in for cards ─── */
+    /* ── Scroll fade-in for cards ── */
     var cards = document.querySelectorAll('.project-card');
     if ('IntersectionObserver' in window) {
       var observer = new IntersectionObserver(function(entries) {
