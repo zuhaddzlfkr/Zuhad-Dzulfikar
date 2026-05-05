@@ -158,16 +158,25 @@
       padding-left: 1.2rem;
     }
     .hero-quote cite {
-      display: block;
-      margin-top: 0.9rem;
-      font-family: var(--sans);
-      font-size: 0.7rem;
-      font-style: normal;
-      font-weight: 400;
-      letter-spacing: 0.1em;
-      color: var(--accent);
-      text-transform: uppercase;
-    }
+  display: block;
+  margin-top: 0.9rem;
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+
+.hero-quote cite .cite-desc {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.03em;
+  text-transform: none;
+  opacity: 0.7;
+}
 
     @media (max-width: 680px) {
       .hero { grid-template-columns: 1fr; gap: 2rem; }
@@ -269,16 +278,19 @@
   <main class="page">
 
     <div class="hero">
-      <div>
-        <h1>About<br><em>Me.</em></h1>
-      </div>
-      <div class="hero-meta">
-        <blockquote class="hero-quote">
-          &ldquo;The goal is to turn data into information,<br>and information into insight.&rdquo;
-          <cite>— Carly Fiorina</cite>
-        </blockquote>
-      </div>
-    </div>
+  <div>
+    <h1>About<br><em>Me.</em></h1>
+  </div>
+  <div class="hero-meta">
+    <blockquote class="hero-quote">
+      &ldquo;The goal is to turn data into information,<br>and information into insight.&rdquo;
+      <cite>
+        — Carly Fiorina
+        <span class="cite-desc">American businesswoman and former CEO of Hewlett-Packard</span>
+      </cite>
+    </blockquote>
+  </div>
+</div>
 
     <div class="section-row">
       <h2>My Background</h2>
